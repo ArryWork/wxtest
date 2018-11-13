@@ -1,6 +1,8 @@
 package com.arry.demo.controller;
 
 import com.arry.demo.util.CheckUtil;
+import java.io.IOException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,15 @@ public class WxController {
     }
 
     @PostMapping
-    public String getXml(String xml, HttpServletRequest servletRequest){
+    public String getXml(String xml, HttpServletRequest request) throws IOException {
+        String signature = request.getParameter("signature");
+        String nonce = request.getParameter("nonce");
+        String timestamp = request.getParameter("timestamp");
+        System.out.println(signature);
+        System.out.println(nonce);
+        System.out.println(timestamp);
+        ServletInputStream inputStream = request.getInputStream();
+        System.out.println(inputStream);
         System.out.println(xml);
         return "success";
     }
