@@ -1,6 +1,8 @@
 package com.arry.demo.controller;
 
 import com.arry.demo.util.CheckUtil;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ public class WxController {
     }
 
     @PostMapping
-    public String getXml(String xml){
+    public String getXml(String xml, HttpServletRequest servletRequest){
         System.out.println(xml);
         return "success";
     }
