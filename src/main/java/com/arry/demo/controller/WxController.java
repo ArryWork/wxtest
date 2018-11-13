@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/wx")
+@RequestMapping("/wx/index.html")
 public class WxController {
     @GetMapping("")
     public String test(String signature, String timestamp, String nonce, String echostr){
@@ -25,15 +25,9 @@ public class WxController {
 
     @PostMapping
     public String getXml(String xml, HttpServletRequest request) throws Exception {
-        String signature = request.getParameter("signature");
-        String nonce = request.getParameter("nonce");
-        String timestamp = request.getParameter("timestamp");
-        System.out.println(signature);
-        System.out.println(nonce);
-        System.out.println(timestamp);
         Map map = XmlUtil.parseXml(request);
         System.out.println(map);
-        return "success";
+        return "test";
     }
 
 }
