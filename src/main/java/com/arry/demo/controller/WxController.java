@@ -1,7 +1,9 @@
 package com.arry.demo.controller;
 
 import com.arry.demo.util.CheckUtil;
+import com.arry.demo.util.XmlUtil;
 import java.io.IOException;
+import java.util.Map;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpRequest;
@@ -22,16 +24,15 @@ public class WxController {
     }
 
     @PostMapping
-    public String getXml(String xml, HttpServletRequest request) throws IOException {
+    public String getXml(String xml, HttpServletRequest request) throws Exception {
         String signature = request.getParameter("signature");
         String nonce = request.getParameter("nonce");
         String timestamp = request.getParameter("timestamp");
         System.out.println(signature);
         System.out.println(nonce);
         System.out.println(timestamp);
-        ServletInputStream inputStream = request.getInputStream();
-        System.out.println(inputStream);
-        System.out.println(xml);
+        Map map = XmlUtil.parseXml(request);
+        System.out.println(map);
         return "success";
     }
 
