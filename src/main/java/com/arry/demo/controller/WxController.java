@@ -1,33 +1,39 @@
 package com.arry.demo.controller;
 
-import com.arry.demo.util.CheckUtil;
-import com.arry.demo.util.XmlUtil;
-import java.io.IOException;
-import java.util.Map;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.jfinal.weixin.sdk.msg.in.InTextMsg;
+import com.jfinal.weixin.sdk.msg.in.event.InFollowEvent;
+import com.jfinal.weixin.sdk.msg.in.event.InMenuEvent;
+import com.jfinal.weixin.sdk.msg.out.OutTextMsg;
+import net.dreamlu.weixin.annotation.WxMsgController;
+import net.dreamlu.weixin.properties.DreamWeixinProperties;
+import net.dreamlu.weixin.spring.DreamMsgControllerAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RestController
-@RequestMapping("/wx/index.html")
-public class WxController {
-    @GetMapping("")
-    public String test(String signature, String timestamp, String nonce, String echostr){
-        if (CheckUtil.checkSignature(signature,timestamp,nonce)) {
-            return echostr;
-        }
-        return null;
+@WxMsgController("/weixin/wx")
+public class WxController extends DreamMsgControllerAdapter {
+
+    @Autowired
+    private DreamWeixinProperties weixinProperties;
+
+    @Override
+    protected void processInFollowEvent(InFollowEvent inFollowEvent) {
+        OutTextMsg outMsg = new OutTextMsg(inFollowEvent);
+        outMsg.setContent("关注消息~");
+        render(outMsg);
     }
 
-    @PostMapping
-    public String getXml(String xml, HttpServletRequest request) throws Exception {
-        Map map = XmlUtil.parseXml(request);
-        System.out.println(map);
-        return "test";
+    @Override
+    protected void processInTextMsg(InTextMsg inTextMsg) {
+        System.out.println(weixinProperties.getWxaConfig().getAppId());
+        OutTextMsg outMsg = new OutTextMsg(inTextMsg);
+        outMsg.setContent(inTextMsg.getContent());
+        render(outMsg);
     }
 
+    @Override
+    protected void processInMenuEvent(InMenuEvent inMenuEvent) {
+        OutTextMsg outMsg = new OutTextMsg(inMenuEvent);
+        outMsg.setContent("菜单消息~");
+        render(outMsg);
+    }
 }

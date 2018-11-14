@@ -9,10 +9,10 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class XmlUtil {
+public class MessageUtil {
     public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
         // 将解析结果存储在HashMap中
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         // 从request中取得输入流
         InputStream inputStream = request.getInputStream();
         // 读取输入流
