@@ -9,7 +9,7 @@ import net.dreamlu.weixin.properties.DreamWeixinProperties;
 import net.dreamlu.weixin.spring.DreamMsgControllerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@WxMsgController("/weixin/wx")
+@WxMsgController("/wx")
 public class WxController extends DreamMsgControllerAdapter {
 
     @Autowired
